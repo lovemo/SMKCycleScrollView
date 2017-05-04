@@ -20,7 +20,7 @@
     
     self.cycleScrollView = [[SMKCycleScrollView alloc] init];
     self.cycleScrollView.frame = CGRectMake(20, 100, [UIScreen mainScreen].bounds.size.width - 40, 32);
-//    self.cycleScrollView.backColor = [UIColor orangeColor];
+    self.cycleScrollView.backColor = [UIColor orangeColor];
     self.cycleScrollView.titleColor = [UIColor blackColor];
     self.cycleScrollView.titleFont = [UIFont systemFontOfSize:13];
     

@@ -9,6 +9,8 @@
 #import "SMKCycleScrollView.h"
 #import "UIView+SEKExtension.h"
 
+#define SMKMaxSections 6
+
 @interface SMKCycleScrollView ()<UITableViewDelegate, UITableViewDataSource>
 /**
  *  滚动视图
@@ -18,10 +20,6 @@
  *  定时器
  */
 @property (nonatomic,strong) NSTimer *timer;
-/**
- *  拼接后的文字数组
- */
-@property (nonatomic,strong) NSMutableArray *titleNewArray;
 
 @end
 
@@ -30,7 +28,6 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if (self = [super initWithFrame:frame]) {
-        [self addTimer];
         self.backColor = [UIColor whiteColor];
     }
     
@@ -55,14 +52,42 @@
         [self removeTimer];
     }
     
-//    id lastObj = [titleArray lastObject];
-//    NSMutableArray *objArray = [[NSMutableArray alloc] init];
-//    [objArray addObject:lastObj];
-//    [objArray addObjectsFromArray:titleArray];
-    self.titleNewArray = [titleArray mutableCopy];//objArray;
-    
     [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:SMKMaxSections / 2] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+
+    [self addTimer];
+
+}
+
+- (NSIndexPath *)resetIndexPath
+{
+    // 当前正在展示的位置
+    NSIndexPath *currentIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
+    // 马上显示回最中间那组的数据
+    NSIndexPath *currentIndexPathReset = [NSIndexPath indexPathForRow:currentIndexPath.row inSection:SMKMaxSections/2];
+    [self.tableView scrollToRowAtIndexPath:currentIndexPathReset atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    return currentIndexPathReset;
+}
+
+/**
+ *  下一页
+ */
+- (void)nextPage
+{
+    // 1.马上显示回最中间那组的数据
+    NSIndexPath *currentIndexPathReset = [self resetIndexPath];
     
+    // 2.计算出下一个需要展示的位置
+    NSInteger nextItem = currentIndexPathReset.row + 1;
+    NSInteger nextSection = currentIndexPathReset.section;
+    if (nextItem == self.titleArray.count) {
+        nextItem = 0;
+        nextSection++;
+    }
+    NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:nextItem inSection:nextSection];
+    
+    // 3.通过动画滚动到下一个位置
+    [self.tableView scrollToRowAtIndexPath:nextIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 - (void)setIsCanScroll:(BOOL)isCanScroll {
@@ -71,29 +96,14 @@
     self.tableView.scrollEnabled = isCanScroll;
 }
 
-- (void)setTitleColor:(UIColor *)titleColor {
-    
-    _titleColor = titleColor;
-    [self.tableView reloadData];
-}
-
-- (void)setTitleFont:(UIFont *)titleFont {
-    _titleFont = titleFont;
-    [self.tableView reloadData];
-}
-
-- (void)nextLabel {
-    
-    CGPoint oldPoint = self.tableView.contentOffset;
-    oldPoint.y += 32;
-    [self.tableView setContentOffset:oldPoint animated:YES];
-    
-}
-
 #pragma mark --------------------  UITableView DataSource && Delegate  --------------------
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return SMKMaxSections;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.titleNewArray.count;
+    return self.titleArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -103,24 +113,15 @@
     cell.textLabel.backgroundColor = self.backColor;
     cell.textLabel.textColor = self.titleColor;
     cell.textLabel.font = self.titleFont;
-    cell.textLabel.text = self.titleNewArray[indexPath.row];
+    cell.textLabel.text = self.titleArray[indexPath.row];
     
     return cell;
     
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    !self.selectedBlock ?: self.selectedBlock(indexPath.row, self.titleNewArray[indexPath.row]);
-}
-
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-
-    if (scrollView.contentOffset.y == scrollView.frame.size.height*(self.titleArray.count )) {
-        [self.tableView setContentOffset:CGPointMake(0, 0) animated:NO];
-
-    }
-    
+    !self.selectedBlock ?: self.selectedBlock(indexPath.row, self.titleArray[indexPath.row]);
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -133,7 +134,7 @@
 }
 
 - (void)addTimer{
-    self.timer = [NSTimer timerWithTimeInterval:3.0 target:self selector:@selector(nextLabel) userInfo:nil repeats:YES];
+    self.timer = [NSTimer timerWithTimeInterval:3.0 target:self selector:@selector(nextPage) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
@@ -154,8 +155,9 @@
     
     if (_tableView == nil) {
         
-        _tableView = [[UITableView alloc] init];
-        _tableView.tableFooterView = [[UIView alloc]init];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableView.sectionFooterHeight = 0;
+        _tableView.sectionHeaderHeight = 0;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.rowHeight = 32;
         _tableView.delegate = self;
@@ -166,7 +168,9 @@
         _tableView.pagingEnabled = YES;
 
         [_tableView registerClass:[CycleViewCell class] forCellReuseIdentifier:@"cell"];
+        _tableView.tableFooterView = [[UIView alloc]init];
         [self addSubview:_tableView];
+
     }
     
     return _tableView;
