@@ -29,6 +29,7 @@
     
     if (self = [super initWithFrame:frame]) {
         self.backColor = [UIColor whiteColor];
+        
     }
     
     return self;
@@ -43,6 +44,9 @@
     
     _titleArray = titleArray;
     
+    [self removeTimer];
+    [self addTimer];
+    
     if (titleArray == nil) {
         [self removeTimer];
         return;
@@ -54,9 +58,9 @@
     
     [self.tableView reloadData];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:SMKMaxSections / 2] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-
-    [self addTimer];
-
+    
+    
+    
 }
 
 - (NSIndexPath *)resetIndexPath
@@ -108,7 +112,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CycleViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    
+    cell.contentView.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.backgroundColor = self.backColor;
     cell.textLabel.textColor = self.titleColor;
@@ -159,18 +163,18 @@
         _tableView.sectionFooterHeight = 0;
         _tableView.sectionHeaderHeight = 0;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.rowHeight = 32;
+        _tableView.rowHeight = 36;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.scrollEnabled = NO;
         _tableView.pagingEnabled = YES;
-
+        
         [_tableView registerClass:[CycleViewCell class] forCellReuseIdentifier:@"cell"];
         _tableView.tableFooterView = [[UIView alloc]init];
         [self addSubview:_tableView];
-
+        
     }
     
     return _tableView;
