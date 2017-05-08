@@ -44,9 +44,6 @@
     
     _titleArray = titleArray;
     
-    [self removeTimer];
-    [self addTimer];
-    
     if (titleArray == nil) {
         [self removeTimer];
         return;
@@ -56,21 +53,26 @@
         [self removeTimer];
     }
     
-    [self.tableView reloadData];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:SMKMaxSections / 2] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    
-    
-    
+    if (titleArray.count > 1) {
+        [self removeTimer];
+        [self addTimer];
+        [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:SMKMaxSections / 2] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }
 }
 
 - (NSIndexPath *)resetIndexPath
 {
     // 当前正在展示的位置
     NSIndexPath *currentIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
-    // 马上显示回最中间那组的数据
-    NSIndexPath *currentIndexPathReset = [NSIndexPath indexPathForRow:currentIndexPath.row inSection:SMKMaxSections/2];
-    [self.tableView scrollToRowAtIndexPath:currentIndexPathReset atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-    return currentIndexPathReset;
+    if (currentIndexPath != nil) {
+        // 马上显示回最中间那组的数据
+        NSIndexPath *currentIndexPathReset = [NSIndexPath indexPathForRow:currentIndexPath.row inSection:SMKMaxSections/2];
+        [self.tableView scrollToRowAtIndexPath:currentIndexPathReset atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        return currentIndexPathReset;
+    }
+    
+    return nil;
 }
 
 /**
@@ -81,17 +83,19 @@
     // 1.马上显示回最中间那组的数据
     NSIndexPath *currentIndexPathReset = [self resetIndexPath];
     
-    // 2.计算出下一个需要展示的位置
-    NSInteger nextItem = currentIndexPathReset.row + 1;
-    NSInteger nextSection = currentIndexPathReset.section;
-    if (nextItem == self.titleArray.count) {
-        nextItem = 0;
-        nextSection++;
+    if (currentIndexPathReset != nil) {
+        // 2.计算出下一个需要展示的位置
+        NSInteger nextItem = currentIndexPathReset.row + 1;
+        NSInteger nextSection = currentIndexPathReset.section;
+        if (nextItem == self.titleArray.count) {
+            nextItem = 0;
+            nextSection++;
+        }
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:nextItem inSection:nextSection];
+        
+        // 3.通过动画滚动到下一个位置
+        [self.tableView scrollToRowAtIndexPath:nextIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
-    NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:nextItem inSection:nextSection];
-    
-    // 3.通过动画滚动到下一个位置
-    [self.tableView scrollToRowAtIndexPath:nextIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 - (void)setIsCanScroll:(BOOL)isCanScroll {
@@ -133,8 +137,10 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    //开启定时器
-    [self addTimer];
+    if (self.titleArray.count > 1) {
+        //开启定时器
+        [self addTimer];
+    }
 }
 
 - (void)addTimer{
