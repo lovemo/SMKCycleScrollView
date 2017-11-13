@@ -116,7 +116,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellReusableID = @"cell";
+    static NSString *cellReusableID = @"CycleViewCellID";
     CycleViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReusableID forIndexPath:indexPath];
 
     cell.textLabel.backgroundColor = self.backColor;
@@ -175,7 +175,7 @@
         _tableView.scrollEnabled = NO;
         _tableView.pagingEnabled = YES;
         
-        [_tableView registerClass:[CycleViewCell class] forCellReuseIdentifier:@"cell"];
+        [_tableView registerClass:[CycleViewCell class] forCellReuseIdentifier:@"CycleViewCellID"];
         _tableView.tableFooterView = [[UIView alloc]init];
         [self addSubview:_tableView];
         
