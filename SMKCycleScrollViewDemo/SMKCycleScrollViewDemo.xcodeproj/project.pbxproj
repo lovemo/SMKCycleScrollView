@@ -7,17 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040B4BF31FB9924800D3B3C9 /* SMKCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040B4BF01FB9924800D3B3C9 /* SMKCycleScrollView.m */; };
+		040B4BF41FB9924800D3B3C9 /* UIView+SEKExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 040B4BF21FB9924800D3B3C9 /* UIView+SEKExtension.m */; };
 		04BDB7791EBB06C900DD809F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDB7781EBB06C900DD809F /* main.m */; };
 		04BDB77C1EBB06C900DD809F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDB77B1EBB06C900DD809F /* AppDelegate.m */; };
 		04BDB77F1EBB06C900DD809F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDB77E1EBB06C900DD809F /* ViewController.m */; };
 		04BDB7821EBB06C900DD809F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04BDB7801EBB06C900DD809F /* Main.storyboard */; };
 		04BDB7841EBB06C900DD809F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04BDB7831EBB06C900DD809F /* Assets.xcassets */; };
 		04BDB7871EBB06C900DD809F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04BDB7851EBB06C900DD809F /* LaunchScreen.storyboard */; };
-		04BDB7991EBB0D6200DD809F /* SMKCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDB7961EBB0D6200DD809F /* SMKCycleScrollView.m */; };
-		04BDB79A1EBB0D6200DD809F /* UIView+SEKExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDB7981EBB0D6200DD809F /* UIView+SEKExtension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040B4BEF1FB9924800D3B3C9 /* SMKCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMKCycleScrollView.h; sourceTree = "<group>"; };
+		040B4BF01FB9924800D3B3C9 /* SMKCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMKCycleScrollView.m; sourceTree = "<group>"; };
+		040B4BF11FB9924800D3B3C9 /* UIView+SEKExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SEKExtension.h"; sourceTree = "<group>"; };
+		040B4BF21FB9924800D3B3C9 /* UIView+SEKExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SEKExtension.m"; sourceTree = "<group>"; };
 		04BDB7741EBB06C900DD809F /* SMKCycleScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SMKCycleScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04BDB7781EBB06C900DD809F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04BDB77A1EBB06C900DD809F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -28,10 +32,6 @@
 		04BDB7831EBB06C900DD809F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04BDB7861EBB06C900DD809F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04BDB7881EBB06C900DD809F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04BDB7951EBB0D6200DD809F /* SMKCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMKCycleScrollView.h; sourceTree = "<group>"; };
-		04BDB7961EBB0D6200DD809F /* SMKCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMKCycleScrollView.m; sourceTree = "<group>"; };
-		04BDB7971EBB0D6200DD809F /* UIView+SEKExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SEKExtension.h"; sourceTree = "<group>"; };
-		04BDB7981EBB0D6200DD809F /* UIView+SEKExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SEKExtension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,10 +45,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040B4BEE1FB9924800D3B3C9 /* SMKCycleScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				040B4BEF1FB9924800D3B3C9 /* SMKCycleScrollView.h */,
+				040B4BF01FB9924800D3B3C9 /* SMKCycleScrollView.m */,
+				040B4BF11FB9924800D3B3C9 /* UIView+SEKExtension.h */,
+				040B4BF21FB9924800D3B3C9 /* UIView+SEKExtension.m */,
+			);
+			name = SMKCycleScrollView;
+			path = ../SMKCycleScrollView;
+			sourceTree = "<group>";
+		};
 		04BDB76B1EBB06C900DD809F = {
 			isa = PBXGroup;
 			children = (
-				04BDB7941EBB0D6200DD809F /* SMKCycleScrollView */,
+				040B4BEE1FB9924800D3B3C9 /* SMKCycleScrollView */,
 				04BDB7761EBB06C900DD809F /* SMKCycleScrollViewDemo */,
 				04BDB7751EBB06C900DD809F /* Products */,
 			);
@@ -84,17 +96,6 @@
 				04BDB7781EBB06C900DD809F /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		04BDB7941EBB0D6200DD809F /* SMKCycleScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				04BDB7951EBB0D6200DD809F /* SMKCycleScrollView.h */,
-				04BDB7961EBB0D6200DD809F /* SMKCycleScrollView.m */,
-				04BDB7971EBB0D6200DD809F /* UIView+SEKExtension.h */,
-				04BDB7981EBB0D6200DD809F /* UIView+SEKExtension.m */,
-			);
-			path = SMKCycleScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,8 +169,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04BDB79A1EBB0D6200DD809F /* UIView+SEKExtension.m in Sources */,
-				04BDB7991EBB0D6200DD809F /* SMKCycleScrollView.m in Sources */,
+				040B4BF41FB9924800D3B3C9 /* UIView+SEKExtension.m in Sources */,
+				040B4BF31FB9924800D3B3C9 /* SMKCycleScrollView.m in Sources */,
 				04BDB77F1EBB06C900DD809F /* ViewController.m in Sources */,
 				04BDB77C1EBB06C900DD809F /* AppDelegate.m in Sources */,
 				04BDB7791EBB06C900DD809F /* main.m in Sources */,
@@ -331,6 +332,7 @@
 				04BDB78D1EBB06C900DD809F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

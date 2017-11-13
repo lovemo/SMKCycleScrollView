@@ -29,7 +29,7 @@
     
     if (self = [super initWithFrame:frame]) {
         self.backColor = [UIColor whiteColor];
-        
+        self.contentHeight = 36;
     }
     
     return self;
@@ -38,6 +38,18 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.tableView.frame = self.bounds;
+}
+
+- (void)setContentHeight:(CGFloat)contentHeight {
+    _contentHeight = contentHeight;
+    self.tableView.rowHeight = contentHeight;
+    [self.tableView reloadData];
+}
+
+- (void)setIsEnabledScroll:(BOOL)isEnabledScroll {
+    
+    _isEnabledScroll = isEnabledScroll;
+    self.tableView.scrollEnabled = isEnabledScroll;
 }
 
 - (void)setTitleArray:(NSArray *)titleArray {
@@ -61,8 +73,7 @@
     }
 }
 
-- (NSIndexPath *)resetIndexPath
-{
+- (NSIndexPath *)resetIndexPath {
     // 当前正在展示的位置
     NSIndexPath *currentIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
     if (currentIndexPath != nil) {
@@ -75,11 +86,7 @@
     return nil;
 }
 
-/**
- *  下一页
- */
-- (void)nextPage
-{
+- (void)nextPage {
     // 1.马上显示回最中间那组的数据
     NSIndexPath *currentIndexPathReset = [self resetIndexPath];
     
@@ -98,12 +105,6 @@
     }
 }
 
-- (void)setIsCanScroll:(BOOL)isCanScroll {
-    
-    _isCanScroll = isCanScroll;
-    self.tableView.scrollEnabled = isCanScroll;
-}
-
 #pragma mark --------------------  UITableView DataSource && Delegate  --------------------
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -115,9 +116,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CycleViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.contentView.backgroundColor = [UIColor whiteColor];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    static NSString *cellReusableID = @"cell";
+    CycleViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReusableID forIndexPath:indexPath];
+
     cell.textLabel.backgroundColor = self.backColor;
     cell.textLabel.textColor = self.titleColor;
     cell.textLabel.font = self.titleFont;
@@ -126,7 +127,6 @@
     return cell;
     
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     !self.selectedBlock ?: self.selectedBlock(indexPath.row, self.titleArray[indexPath.row]);
@@ -149,13 +149,11 @@
 }
 
 - (void)removeTimer {
-    
     [self.timer invalidate];
     self.timer = nil;
 }
 
 - (void)dealloc {
-    
     [self.timer invalidate];
     self.timer = nil;
 }
@@ -169,7 +167,7 @@
         _tableView.sectionFooterHeight = 0;
         _tableView.sectionHeaderHeight = 0;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.rowHeight = 36;
+        _tableView.rowHeight = self.contentHeight;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsHorizontalScrollIndicator = NO;
@@ -190,6 +188,14 @@
 
 
 @implementation CycleViewCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.contentView.backgroundColor = [UIColor whiteColor];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    return self;
+}
 
 - (void)layoutSubviews {
     [super layoutSubviews];

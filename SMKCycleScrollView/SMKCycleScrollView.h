@@ -13,15 +13,15 @@
 /**
  *  文字数组
  */
-@property (nonatomic,strong) NSArray *titleArray;
+@property (nonatomic, strong) NSArray *titleArray;
 /**
  *  是否可以拖拽
  */
-@property (nonatomic,assign) BOOL isCanScroll;
+@property (nonatomic, assign) BOOL isEnabledScroll;
 /**
  *  字体颜色
  */
-@property (nonatomic,strong) UIColor *titleColor;
+@property (nonatomic, strong) UIColor *titleColor;
 /**
  *  背景颜色
  */
@@ -29,12 +29,15 @@
 /**
  *  字体
  */
-@property (nonatomic,strong) UIFont *titleFont;
-
+@property (nonatomic, strong) UIFont *titleFont;
+/**
+ *  滚动内容高度
+ */
+@property (nonatomic, assign) CGFloat contentHeight;
 /**
  *  block回调
  */
-@property (nonatomic,copy) void(^selectedBlock)(NSInteger index,NSString *title);
+@property (nonatomic, copy) void(^selectedBlock)(NSInteger index,NSString *title);
 
 /**
  *  关闭定时器
