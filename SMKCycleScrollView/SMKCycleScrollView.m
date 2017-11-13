@@ -20,6 +20,10 @@
  *  定时器
  */
 @property (nonatomic,strong) NSTimer *timer;
+/**
+ *  滚动内容高度
+ */
+@property (nonatomic, assign) CGFloat contentHeight;
 
 @end
 
@@ -29,7 +33,7 @@
     
     if (self = [super initWithFrame:frame]) {
         self.backColor = [UIColor whiteColor];
-        self.contentHeight = 36;
+        
     }
     
     return self;
@@ -37,6 +41,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    self.contentHeight = self.height;
     self.tableView.frame = self.bounds;
 }
 

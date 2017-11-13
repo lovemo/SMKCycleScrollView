@@ -31,10 +31,6 @@
  */
 @property (nonatomic, strong) UIFont *titleFont;
 /**
- *  滚动内容高度
- */
-@property (nonatomic, assign) CGFloat contentHeight;
-/**
  *  block回调
  */
 @property (nonatomic, copy) void(^selectedBlock)(NSInteger index,NSString *title);
